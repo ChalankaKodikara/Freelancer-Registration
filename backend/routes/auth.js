@@ -9,6 +9,7 @@ const Job = require("../models/job"); // Import the Job model
 // Create a new job
 router.post("/jobs", async (req, res) => {
   try {
+    // Extract job data from the request body
     const jobData = req.body;
 
     // Create a new Job instance
@@ -23,7 +24,6 @@ router.post("/jobs", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 // Generate a random JWT secret key
 const jwtSecret = crypto.randomBytes(32).toString("hex");
 

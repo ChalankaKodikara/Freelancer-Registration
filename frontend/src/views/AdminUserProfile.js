@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import Cookies from "js-cookie";
+
+const useremail = Cookies.get("useremail");
 
 function User() {
   const [formData, setFormData] = useState({
     freelancerName: "",
     jobTitle: "",
-    email: "",
-    content01: "",
-    content02: "",
-    content03: "",
-    content04: "",
-    content05: "",
-    postalCode: "",
-    aboutTheJob: "",
+    email: useremail,
+    location: "",
+    contact: "",
+    jobCategories: "",
+    jobDescription: "",
   });
 
   const handleChange = (e) => {
@@ -34,7 +34,7 @@ function User() {
 
       if (response.status === 201) {
         alert("Job request submitted successfully!");
-        setFormData({ ...formData, ...initialFormData }); 
+        setFormData({ ...formData, ...initialFormData });
       } else {
         alert("Error submitting job request.");
       }
@@ -48,13 +48,10 @@ function User() {
     freelancerName: "",
     jobTitle: "",
     email: "",
-    content01: "",
-    content02: "",
-    content03: "",
-    content04: "",
-    content05: "",
-    postalCode: "",
-    aboutTheJob: "",
+    location: "",
+    contact: "",
+    jobCategories: "",
+    jobDescription: "",
   };
 
   return (
@@ -67,117 +64,98 @@ function User() {
                 <Card.Title as="h4">JOB </Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col className="pr-1" md="5">
                       <Form.Group>
                         <label>Freelancer Name </label>
                         <Form.Control
-                          // defaultValue="Creative Code Inc."
-                          placeholder="Company"
+                          name="freelancerName"
+                          value={formData.freelancerName}
+                          onChange={handleChange}
+                          placeholder="Enter Your Name"
                           type="text"
-                        ></Form.Control>
+                        />
                       </Form.Group>
                     </Col>
                     <Col className="px-1" md="3">
                       <Form.Group>
                         <label>Job Title</label>
                         <Form.Control
-                          // defaultValue="michael23"
-                          placeholder="Username"
+                          name="jobTitle"
+                          value={formData.jobTitle}
+                          onChange={handleChange}
+                          placeholder=" Your Job Title"
                           type="text"
-                        ></Form.Control>
+                        />
                       </Form.Group>
                     </Col>
                     <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
+                      {/* <Form.Group>
+                        <label>Email address</label>
                         <Form.Control
-                          placeholder="Email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="Enter Your Email Address"
                           type="email"
-                        ></Form.Control>
-                      </Form.Group>
+                          disabled
+                        />
+                      </Form.Group> */}
                     </Col>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="6">
                       <Form.Group>
-                        <label>Content 01 </label>
+                        <label>Location</label>
                         <Form.Control
-                          // defaultValue="Mike"
-                          placeholder="Company"
+                          name="location"
+                          value={formData.location}
+                          onChange={handleChange}
+                          placeholder="Enter Your Location or Country"
                           type="text"
-                        ></Form.Control>
+                        />
                       </Form.Group>
                     </Col>
                     <Col className="pl-1" md="6">
                       <Form.Group>
-                        <label>Content 02 </label>
+                        <label>Contact</label>
                         <Form.Control
-                          // defaultValue="Andrew"
-                          placeholder="Last Name"
+                          name="contact"
+                          value={formData.contact}
+                          onChange={handleChange}
+                          placeholder="Enter Your Contact Details"
                           type="text"
-                        ></Form.Control>
+                        />
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="12">
                       <Form.Group>
-                        <label>Content 03 </label>
+                        <label>Job Categories</label>
                         <Form.Control
-                          // defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                          placeholder="Home Address"
+                          name="jobCategories"
+                          value={formData.jobCategories}
+                          onChange={handleChange}
+                          placeholder="Enter Your Job Categories"
                           type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="4">
-                      <Form.Group>
-                        <label>Content 04 </label>
-                        <Form.Control
-                          // defaultValue="Mike"
-                          placeholder="City"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="px-1" md="4">
-                      <Form.Group>
-                        <label>Content 05 </label>
-                        <Form.Control
-                          // defaultValue="Andrew"
-                          placeholder="Country"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label>Postal Code</label>
-                        <Form.Control
-                          placeholder="ZIP Code"
-                          type="number"
-                        ></Form.Control>
+                        />
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="12">
                       <Form.Group>
-                        <label>About The Job</label>
+                        <label>Job Description</label>
                         <Form.Control
-                          cols="80"
-                          // defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                          // that two seat Lambo."
-                          placeholder="Here can be your description"
-                          rows="4"
+                          name="jobDescription"
+                          value={formData.jobDescription}
+                          onChange={handleChange}
+                          placeholder="Here can be your job description"
                           as="textarea"
-                        ></Form.Control>
+                          rows="4"
+                        />
                       </Form.Group>
                     </Col>
                   </Row>

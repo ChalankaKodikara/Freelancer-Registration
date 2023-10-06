@@ -1,28 +1,11 @@
 import React from "react";
-import ChartistGraph from "react-chartist";
-// react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
-  Row,
-  Col,
-  Form,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
+import Card from "./Card";
 
 function Dashboard() {
   return (
-    <>
-      <Container fluid>
-        <p> Dashbord </p>
-      </Container>
-    </>
+    <div>
+      <Card />
+    </div>
   );
 }
 
