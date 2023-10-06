@@ -6,6 +6,19 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const Job = require("../models/job"); // Import the Job model
 
+// Get all job details
+router.get("/jobs", async (req, res) => {
+  try {
+    // Fetch all job details from the database
+    const jobs = await Job.find();
+
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.error("Error fetching job details:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Create a new job
 router.post("/jobs", async (req, res) => {
   try {

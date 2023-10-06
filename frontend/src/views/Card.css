@@ -1,3 +1,4 @@
+/* Card.css */
 .card {
   display: flex;
   flex-direction: column;
@@ -7,11 +8,11 @@
   transition: transform 0.2s;
   overflow: hidden;
   margin: 1rem;
-  max-width: 300px; /* Adjust the max-width as needed */
+  max-width: 300px;
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 .card-content {
