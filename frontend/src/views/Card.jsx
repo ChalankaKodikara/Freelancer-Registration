@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Model from "./Model"; // Import the Model component
 
 function Card() {
   const [jobData, setJobData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
 
-  // Fetch job details from the API when the component mounts
   useEffect(() => {
     axios.get("http://localhost:5000/api/auth/jobs").then((response) => {
-      setJobData(response.data); // Assuming the job data is an array
+      setJobData(response.data);
     });
   }, []);
+
+  const handleViewDetails = (job) => {
+    setSelectedJob(job);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedJob(null);
+    setShowModal(false);
+  };
 
   return (
     <div className="row">
@@ -31,13 +43,25 @@ function Card() {
                 {job.jobDescription}
               </p>
 
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => handleViewDetails(job)}
+              >
                 View More Details
               </button>
             </div>
           </div>
         </div>
       ))}
+
+      {showModal && (
+        <Model
+          job={selectedJob}
+          isOpen={showModal}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }
