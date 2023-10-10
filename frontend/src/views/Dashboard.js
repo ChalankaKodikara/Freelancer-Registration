@@ -1,10 +1,10 @@
 import React from "react";
-import Card from "./Card";
+import Jobtable from "./Jobtable";
 
 function Dashboard() {
   return (
     <div>
-      <Card />
+      <Jobtable />
     </div>
   );
 }

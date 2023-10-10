@@ -1,5 +1,5 @@
 import React from "react";
-import AuthRoute from "./AuthRoute"; // Import the AuthRoute component
+import AuthRoute from "./AuthRoute";
 import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/AdminUserProfile";
 import TableList from "views/TableList.js";
@@ -13,13 +13,14 @@ const dashboardRoutes = [
     component: () => <AuthRoute component={Dashboard} />,
     layout: "/admin",
   },
-  {
-    path: "/user",
-    name: "User Profile",
-    icon: "nc-icon nc-circle-09",
-    component: () => <AuthRoute component={UserProfile} />,
-    layout: "/admin",
-  },
+
+  // {
+  //   path: "/user",
+  //   name: "Send Job Request",
+  //   icon: "nc-icon nc-bag",
+  //   component: () => <AuthRoute component={UserProfile} />,
+  //   layout: "/admin",
+  // },
   {
     path: "/table",
     name: "Table List",

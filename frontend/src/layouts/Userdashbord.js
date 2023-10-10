@@ -44,7 +44,7 @@ function UserDashbord() {
         />{" "}
         {/* Use userRoutes */}
         <div className="main-panel" ref={mainPanel}>
-          <AdminNavbar />
+          {/* <AdminNavbar /> */}
           <div className="content">
             <Switch>
               {userRoutes.map((prop, key) => {

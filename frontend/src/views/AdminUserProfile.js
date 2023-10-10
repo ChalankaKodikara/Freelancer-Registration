@@ -1,6 +1,16 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import Cookies from "js-cookie";
+import {
+  Badge,
+  Button,
+  Card,
+  Form,
+  Navbar,
+  Nav,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 
 const useremail = Cookies.get("useremail");
 
@@ -66,7 +76,7 @@ function User() {
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
                   <Row>
-                    <Col md="6">
+                    <Col className="pr-1" md="6">
                       <Form.Group>
                         <Form.Label>Freelancer Name</Form.Label>
                         <Form.Control
@@ -127,6 +137,7 @@ function User() {
                       type="text"
                     />
                   </Form.Group>
+
                   <Form.Group>
                     <Form.Label>Job Description</Form.Label>
                     <Form.Control

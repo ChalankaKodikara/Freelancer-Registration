@@ -28,7 +28,7 @@ function Signup() {
       }
 
       const response = await axios.post(
-        "https://backend.freelance.tfdatamaster.com/api/auth/signup",
+        "http://localhost:5000/api/auth/signup",
         formData
       );
 

@@ -1,10 +1,10 @@
-import UserDashboard from "views/Dashboard.js";
+import UserDashboard from "views/UserfDashboard";
 import UserProfile from "views/AdminUserProfile";
 import UserNotifications from "views/Notifications.js";
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
+    path: "/UserfDashboard",
     name: "Dashboard",
     icon: "nc-icon nc-chart-pie-35",
     component: UserDashboard,

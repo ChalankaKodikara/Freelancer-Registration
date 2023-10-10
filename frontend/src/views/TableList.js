@@ -19,13 +19,13 @@ function TableList() {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     axios
-      .get("https://backend.freelance.tfdatamaster.com/api/users", {
+      .get("http://localhost:5000/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        setData(response.data);
+        setData(response.data); // Access the "users" property
         setLoading(false);
       })
       .catch((error) => {
@@ -50,24 +50,24 @@ function TableList() {
                   <Table className="table-hover table-striped">
                     <thead>
                       <tr>
-                        <th className="border-0">ID</th>
                         <th className="border-0">First Name</th>
                         <th className="border-0">Last Name</th>
                         <th className="border-0">Country</th>
                         <th className="border-0">Contact Number</th>
-
                         <th className="border-0">Email</th>
                       </tr>
                     </thead>
                     <tbody>
                       {data.map((user) => (
                         <tr key={user._id}>
-                          <td>{user._id}</td>
                           <td>{user.firstName}</td>
                           <td>{user.lastName}</td>
                           <td>{user.country}</td>
                           <td>{user.contactNumber}</td>
                           <td>{user.email}</td>
+                          <button type="button" class="btn btn-outline-primary">
+                            View job
+                          </button>
                         </tr>
                       ))}
                     </tbody>

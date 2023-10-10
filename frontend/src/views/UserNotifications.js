@@ -81,7 +81,7 @@ function UserNotifications() {
             <Row>
               <Col md="6">
                 <h5>
-                  <small>Nothing yet</small>
+                  <small>Nothing yet ttt</small>
                 </h5>
               </Col>
             </Row>

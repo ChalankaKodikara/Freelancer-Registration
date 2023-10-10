@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TERipple } from "tw-elements-react";
 import axios from "axios";
-import "./Card.css";
 
 function Card() {
   const [jobData, setJobData] = useState([]);
@@ -14,29 +12,29 @@ function Card() {
   }, []);
 
   return (
-    <div>
+    <div className="row">
       {jobData.map((job, index) => (
-        <div className="card" key={index}>
-          <TERipple>
-            <div className="relative overflow-hidden bg-cover bg-no-repeat">
-              <img
-                className="rounded-t-lg w-full h-48 object-cover"
-                src={job.imageURL} // Make sure "imageURL" matches the field name from your API response
-                alt=""
-              />
-              <a href="#!">
-                <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-              </a>
-            </div>
-          </TERipple>
-          <div className="card-content">
-            <h5 className="card-title">{job.jobTitle}</h5>
-            <p className="card-text">{job.jobDescription}</p>
-            <TERipple>
-              <button type="button" className="btn">
-                Button
+        <div className="col-md-4 mb-4" key={index}>
+          <div className="card">
+            <img src={job.imageURL} className="card-img-top" alt="" />
+            <div className="card-body">
+              <h4 className="card-title" style={{ fontWeight: "bold" }}>
+                {job.jobTitle}
+              </h4>
+              <h5 className="card-text" style={{ lineHeight: "0.7" }}>
+                {job.freelancerName}
+              </h5>
+              <h5 className="card-text" style={{ lineHeight: "0.7" }}>
+                {job.location}
+              </h5>
+              <p className="card-text" style={{ lineHeight: "0.7" }}>
+                {job.jobDescription}
+              </p>
+
+              <button type="button" className="btn btn-primary">
+                View More Details
               </button>
-            </TERipple>
+            </div>
           </div>
         </div>
       ))}
