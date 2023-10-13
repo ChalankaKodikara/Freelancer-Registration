@@ -8,7 +8,7 @@ import Notifications from "views/Notifications.js";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "JOBS",
     icon: "nc-icon nc-chart-pie-35",
     component: () => <AuthRoute component={Dashboard} />,
     layout: "/admin",
@@ -23,7 +23,7 @@ const dashboardRoutes = [
   // },
   {
     path: "/table",
-    name: "Table List",
+    name: "Registered Users",
     icon: "nc-icon nc-notes",
     component: () => <AuthRoute component={TableList} />,
     layout: "/admin",

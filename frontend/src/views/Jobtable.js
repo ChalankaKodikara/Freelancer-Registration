@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Container, Row, Col, Table, Dropdown } from "react-bootstrap";
 import axios from "axios";
 
 function Jobtable() {
@@ -29,91 +19,101 @@ function Jobtable() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching user details:", error);
+        console.error("Error fetching job details:", error);
         setLoading(false);
       });
   }, []);
 
+  const handleStatusChange = (jobId, newStatus) => {
+    const token = localStorage.getItem("authToken");
+
+    axios
+      .put(
+        `http://localhost:5000/api/auth/jobs/${jobId}/status`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const updatedJob = response.data;
+        setData((prevData) =>
+          prevData.map((job) => (job._id === updatedJob._id ? updatedJob : job))
+        );
+      })
+      .catch((error) => {
+        console.error("Error updating job status:", error);
+      });
+  };
+
   return (
-    <>
-      <Container fluid>
-        <Row>
-          <Col md="12">
-            <Card className="strpied-tabled-with-hover">
-              <Card.Header>
-                <Card.Title as="h4">Job Details</Card.Title>
-              </Card.Header>
-              <Card.Body className="table-full-width table-responsive px-0">
-                {loading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <Table className="table-hover table-striped">
-                    <thead>
-                      <tr>
-                        {/* <th className="border-0">ID</th> */}
-                        <th className="border-0">freelancer Name</th>
-                        <th className="border-0">Job Title</th>
-                        <th className="border-0">Email</th>
-                        <th className="border-0">Job Categories</th>
-                        <th className="border-0">Job Discription</th>
-                        <th className="border-0">Status</th>
-                        <th className="border-0"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.map((jobs) => (
-                        <tr key={jobs._id}>
-                          {/* <td>{jobs._id}</td> */}
-                          <td>{jobs.freelancerName}</td>
-                          <td>{jobs.jobTitle}</td>
-                          <td>{jobs.email}</td>
-                          <td>{jobs.jobCategories}</td>
-                          <td>{jobs.jobDescription}</td>
-                          <div class="dropdown">
-                            <button
-                              class="btn btn-secondary dropdown-toggle"
-                              type="button"
-                              id="dropdownMenuButton1"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              Status{" "}
-                            </button>
-                            <ul
-                              class="dropdown-menu"
-                              aria-labelledby="dropdownMenuButton1"
-                            >
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  Approved
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  DenieD
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  Something else here
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          {/* <button type="button" class="btn btn-outline-primary">
-                            View job
-                          </button> */}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container fluid>
+      <Row>
+        <Col md={12}>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Freelancer Name</th>
+                <th>Job Title</th>
+                <th>Email</th>
+                <th>Job Categories</th>
+                <th>Job Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="6">Loading...</td>
+                </tr>
+              ) : (
+                data.map((job) => (
+                  <tr key={job._id}>
+                    <td>{job.freelancerName}</td>
+                    <td>{job.jobTitle}</td>
+                    <td>{job.email}</td>
+                    <td>{job.jobCategories}</td>
+                    <td>{job.jobDescription}</td>
+                    <td>
+                      <Dropdown>
+                        <Dropdown.Toggle variant="info" id="dropdown-basic">
+                          {job.status}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item
+                            onClick={() =>
+                              handleStatusChange(job._id, "Approved")
+                            }
+                          >
+                            Approved
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              handleStatusChange(job._id, "Denied")
+                            }
+                          >
+                            Denied
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              handleStatusChange(job._id, "Pending")
+                            }
+                          >
+                            Pending
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

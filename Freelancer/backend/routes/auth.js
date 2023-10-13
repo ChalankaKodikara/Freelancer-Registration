@@ -19,55 +19,14 @@ router.get("/jobs", async (req, res) => {
   }
 });
 
-// Update the status of a job
-router.put("/jobs/:id/status", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status } = req.body;
-
-    // Find the job by ID and update the status
-    const updatedJob = await Job.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
-    );
-
-    if (!updatedJob) {
-      return res.status(404).json({ error: "Job not found" });
-    }
-
-    res.status(200).json(updatedJob);
-  } catch (error) {
-    console.error("Error updating job status:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
+// Create a new job
 router.post("/jobs", async (req, res) => {
   try {
-    // Extract job data from the request body, including the status
-    const {
-      freelancerName,
-      jobTitle,
-      email,
-      location,
-      contact,
-      jobCategories,
-      jobDescription,
-      status,
-    } = req.body;
+    // Extract job data from the request body
+    const jobData = req.body;
 
-    // Create a new Job instance with the status field
-    const newJob = new Job({
-      freelancerName,
-      jobTitle,
-      email,
-      location,
-      contact,
-      jobCategories,
-      jobDescription,
-      status: status || "Pending",
-    });
+    // Create a new Job instance
+    const newJob = new Job(jobData);
 
     // Save the job to the database
     await newJob.save();
@@ -125,20 +84,6 @@ router.post("/signup", async (req, res) => {
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.error("User signup error:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-// Get job details for the currently logged-in user
-router.get("/jobs", async (req, res) => {
-  const useremail = req.cookies.useremail; // Retrieve the user's email from the cookie
-
-  try {
-    // Fetch job details for the currently logged-in user from the database
-    const jobs = await Job.find({ email: useremail });
-
-    res.status(200).json(jobs);
-  } catch (error) {
-    console.error("Error fetching job details:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Model from "./Model"; // Import the Model component
+import Model from "./Model";
+import Cookies from "js-cookie";
 
 function Card() {
   const [jobData, setJobData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const useremail = Cookies.get("useremail");
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/auth/jobs").then((response) => {
@@ -23,9 +25,11 @@ function Card() {
     setShowModal(false);
   };
 
+  const filteredJobs = jobData.filter((job) => job.email === useremail);
+
   return (
     <div className="row">
-      {jobData.map((job, index) => (
+      {filteredJobs.map((job, index) => (
         <div className="col-md-4 mb-4" key={index}>
           <div className="card">
             <img src={job.imageURL} className="card-img-top" alt="" />
@@ -42,6 +46,11 @@ function Card() {
               <p className="card-text" style={{ lineHeight: "0.7" }}>
                 {job.jobDescription}
               </p>
+
+              <div>
+                <strong>Status: </strong>
+                {job.status}
+              </div>
 
               <button
                 type="button"

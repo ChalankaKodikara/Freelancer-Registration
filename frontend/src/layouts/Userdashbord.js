@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useLocation, Switch } from "react-router-dom";
 import Cookies from "js-cookie";
+import "./UserDashboard.css"; // Replace with the actual path to your CSS file
 
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import userRoutes from "userRoutes.js"; // Import user routes
 import sidebarImage from "assets/img/sidebar-3.jpg";
@@ -44,7 +44,8 @@ function UserDashbord() {
         />{" "}
         {/* Use userRoutes */}
         <div className="main-panel" ref={mainPanel}>
-          {/* <AdminNavbar /> */}
+          <AdminNavbar />
+
           <div className="content">
             <Switch>
               {userRoutes.map((prop, key) => {
@@ -67,14 +68,6 @@ function UserDashbord() {
           <Footer />
         </div>
       </div>
-      <FixedPlugin
-        hasImage={hasImage}
-        setHasImage={() => setHasImage(!hasImage)}
-        color={color}
-        setColor={(color) => setColor(color)}
-        image={image}
-        setImage={(image) => setImage(image)}
-      />
     </>
   );
 }

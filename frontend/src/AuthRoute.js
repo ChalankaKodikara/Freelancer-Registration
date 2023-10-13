@@ -1,3 +1,4 @@
+// AuthRoute.js
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -9,7 +10,7 @@ const AuthRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        authToken ? <Component {...props} /> : <Redirect to="/login" />
+        authToken ? <Component {...props} /> : <Redirect to="/signin" />
       }
     />
   );
