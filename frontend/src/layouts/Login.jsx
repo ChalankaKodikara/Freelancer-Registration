@@ -6,6 +6,11 @@ import Cookies from "js-cookie";
 import backgroundImage from "../assets/img/b1.jpg";
 
 function Login() {
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -16,7 +21,7 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://backfreelance.tfdatamaster.com/api/auth/login",
         credentials
       );
       const token = response.data.token;
@@ -102,6 +107,7 @@ function Login() {
                       password: e.target.value,
                     })
                   }
+                  onKeyPress={handleKeyPress}
                 />
               </div>
 

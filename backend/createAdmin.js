@@ -9,7 +9,7 @@ mongoose.connect(process.env.MONGO_DB_URI, {
 });
 
 const adminData = {
-  username: "admin",
+  useremail: "admin", // Change the field name to 'useremail'
   password: "504678",
 };
 
@@ -21,7 +21,7 @@ bcrypt.hash(adminData.password, 10, (err, hashedPassword) => {
   }
 
   const admin = new Admin({
-    username: adminData.username,
+    useremail: adminData.useremail, // Change the field name to 'useremail'
     password: hashedPassword,
   });
 

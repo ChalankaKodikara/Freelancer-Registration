@@ -15,20 +15,19 @@ function Signup() {
   });
 
   const [error, setError] = useState("");
+  const [validEmail, setValidEmail] = useState(true);
 
   const history = useHistory();
 
   const handleSignup = async () => {
     try {
-      // Basic client-side email validation
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailPattern.test(formData.email)) {
+      if (!validEmail) {
         setError("Invalid email address.");
         return;
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        "https://backfreelance.tfdatamaster.com/api/auth/signup",
         formData
       );
 
@@ -49,6 +48,17 @@ function Signup() {
     }
   };
 
+  const validateEmail = (email) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setFormData({ ...formData, email });
+    setValidEmail(validateEmail(email));
+  };
+
   return (
     <section
       className="d-flex justify-content-center align-items-center"
@@ -64,11 +74,7 @@ function Signup() {
           <div className="col-md-6 mb-5">
             <div className="d-flex flex-column ms-5">
               <div className="text-center">
-                <img
-                  src="https://swiztech.ai/wp-content/uploads/2023/08/SwizTech-Logo-new.png"
-                  style={{ width: "185px" }}
-                  alt="logo"
-                />
+                {/* Your logo goes here */}
                 <h4 className="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
               </div>
 
@@ -110,14 +116,15 @@ function Signup() {
                 </label>
                 <input
                   type="email"
-                  className="form-control"
+                  className={`form-control ${validEmail ? "" : "is-invalid"}`}
                   id="email"
                   placeholder="Enter your email"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={handleEmailChange}
                 />
+                {!validEmail && (
+                  <div className="invalid-feedback">Invalid email address.</div>
+                )}
               </div>
               <div className="mb-4">
                 <label htmlFor="country" className="form-label">
@@ -182,22 +189,6 @@ function Signup() {
                 <Link to="/login" className="btn btn-outline-danger mx-2">
                   Sign In
                 </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6 mb-5 d-flex align-items-center">
-            <div className="d-flex flex-column justify-content-center gradient-custom-2 h-50 mb-4">
-              <div className="text-black px-3 py-4 p-md-5 mx-md-4 text-center">
-                <h4 className="mb-4">We are more than just a company</h4>
-                <p className="small mb-0">
-                  SwizTech is a next-generation organization well-equipped to
-                  provide innovative solutions, powering the success of our
-                  clients globally. Our solutions are packaged together to add
-                  value to the strategic utilization of this lifeline to
-                  accomplish organizational goals and objectives effectively and
-                  productively.
-                </p>
               </div>
             </div>
           </div>

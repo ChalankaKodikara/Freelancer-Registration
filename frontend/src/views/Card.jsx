@@ -10,9 +10,11 @@ function Card() {
   const useremail = Cookies.get("useremail");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/auth/jobs").then((response) => {
-      setJobData(response.data);
-    });
+    axios
+      .get("https://backfreelance.tfdatamaster.com/api/auth/jobs")
+      .then((response) => {
+        setJobData(response.data);
+      });
   }, []);
 
   const handleViewDetails = (job) => {

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation, Switch } from "react-router-dom";
+import { useLocation, Switch, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import AdminNavbar from "components/Navbars/AdminNavbar";
@@ -17,6 +17,7 @@ function Admin() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
+  const history = useHistory();
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -34,12 +35,26 @@ function Admin() {
 
   const isAuthenticated = Cookies.get("authToken");
 
+  const handleSignOut = () => {
+    // Implement your signout logic here, e.g., making an API request to the server
+    // Clear user data, remove tokens, or perform any other required actions
+
+    // After successful signout, navigate to the sign-in page
+    // You can use the history object to navigate to the desired route
+    history.push("/signin");
+  };
+
   return (
     <>
       <div className="wrapper">
-        <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
+        <Sidebar
+          color={color}
+          image={hasImage ? image : ""}
+          routes={routes}
+          handleSignOut={handleSignOut}
+        />
         <div className="main-panel" ref={mainPanel}>
-          <AdminNavbar />
+          <AdminNavbar handleSignOut={handleSignOut} />
           <div className="content">
             <Switch>
               {routes.map((prop, key) => {

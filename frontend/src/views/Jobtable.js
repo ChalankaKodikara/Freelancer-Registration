@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Table, Dropdown } from "react-bootstrap";
+import { Container, Row, Card, Col, Table, Dropdown } from "react-bootstrap";
 import axios from "axios";
 
 function Jobtable() {
@@ -9,7 +9,7 @@ function Jobtable() {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     axios
-      .get("http://localhost:5000/api/auth/jobs", {
+      .get("https://backfreelance.tfdatamaster.com/api/auth/jobs", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,7 +29,7 @@ function Jobtable() {
 
     axios
       .put(
-        `http://localhost:5000/api/auth/jobs/${jobId}/status`,
+        `https://backfreelance.tfdatamaster.com/api/auth/jobs/${jobId}/status`,
         { status: newStatus },
         {
           headers: {
@@ -51,66 +51,80 @@ function Jobtable() {
   return (
     <Container fluid>
       <Row>
-        <Col md={12}>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Freelancer Name</th>
-                <th>Job Title</th>
-                <th>Email</th>
-                <th>Job Categories</th>
-                <th>Job Description</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
+        <Col md="12">
+          <Card className="strpied-tabled-with-hover">
+            <Card.Header>
+              <Card.Title as="h4">User Details</Card.Title>
+            </Card.Header>
+            <Card.Body className="table-full-width table-responsive px-0">
               {loading ? (
-                <tr>
-                  <td colSpan="6">Loading...</td>
-                </tr>
+                <p>Loading...</p>
               ) : (
-                data.map((job) => (
-                  <tr key={job._id}>
-                    <td>{job.freelancerName}</td>
-                    <td>{job.jobTitle}</td>
-                    <td>{job.email}</td>
-                    <td>{job.jobCategories}</td>
-                    <td>{job.jobDescription}</td>
-                    <td>
-                      <Dropdown>
-                        <Dropdown.Toggle variant="info" id="dropdown-basic">
-                          {job.status}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <Dropdown.Item
-                            onClick={() =>
-                              handleStatusChange(job._id, "Approved")
-                            }
-                          >
-                            Approved
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              handleStatusChange(job._id, "Denied")
-                            }
-                          >
-                            Denied
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              handleStatusChange(job._id, "Pending")
-                            }
-                          >
-                            Pending
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </td>
-                  </tr>
-                ))
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Freelancer Name</th>
+                      <th>Job Title</th>
+                      <th>Email</th>
+                      <th>Job Categories</th>
+                      <th>Job Description</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loading ? (
+                      <tr>
+                        <td colSpan="6">Loading...</td>
+                      </tr>
+                    ) : (
+                      data.map((job) => (
+                        <tr key={job._id}>
+                          <td>{job.freelancerName}</td>
+                          <td>{job.jobTitle}</td>
+                          <td>{job.email}</td>
+                          <td>{job.jobCategories}</td>
+                          <td>{job.jobDescription}</td>
+                          <td>
+                            <Dropdown>
+                              <Dropdown.Toggle
+                                variant="info"
+                                id="dropdown-basic"
+                              >
+                                {job.status}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                <Dropdown.Item
+                                  onClick={() =>
+                                    handleStatusChange(job._id, "Approved")
+                                  }
+                                >
+                                  Approved
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() =>
+                                    handleStatusChange(job._id, "Denied")
+                                  }
+                                >
+                                  Denied
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() =>
+                                    handleStatusChange(job._id, "Pending")
+                                  }
+                                >
+                                  Pending
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </Table>
               )}
-            </tbody>
-          </Table>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

@@ -19,14 +19,55 @@ router.get("/jobs", async (req, res) => {
   }
 });
 
-// Create a new job
+// Update the status of a job
+router.put("/jobs/:id/status", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // Find the job by ID and update the status
+    const updatedJob = await Job.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedJob) {
+      return res.status(404).json({ error: "Job not found" });
+    }
+
+    res.status(200).json(updatedJob);
+  } catch (error) {
+    console.error("Error updating job status:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.post("/jobs", async (req, res) => {
   try {
-    // Extract job data from the request body
-    const jobData = req.body;
+    // Extract job data from the request body, including the status
+    const {
+      freelancerName,
+      jobTitle,
+      email,
+      location,
+      contact,
+      jobCategories,
+      jobDescription,
+      status,
+    } = req.body;
 
-    // Create a new Job instance
-    const newJob = new Job(jobData);
+    // Create a new Job instance with the status field
+    const newJob = new Job({
+      freelancerName,
+      jobTitle,
+      email,
+      location,
+      contact,
+      jobCategories,
+      jobDescription,
+      status: status || "Pending",
+    });
 
     // Save the job to the database
     await newJob.save();
@@ -57,33 +98,31 @@ function authenticateJWT(req, res, next) {
   }
 }
 
-// Signup route
-router.post("/signup", async (req, res) => {
+// Signout route
+router.post("/signout", (req, res) => {
   try {
-    const { firstName, lastName, email, country, contactNumber, password } =
-      req.body;
+    // Clear the user's session or token. In your case, it appears you're using JWT tokens.
+    // You can optionally implement a session-based approach depending on your use case.
+    // For JWT tokens, you can simply let the client remove the token on logout.
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(409).json({ error: "Email already taken" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = new User({
-      firstName,
-      lastName,
-      email,
-      country,
-      contactNumber,
-      password: hashedPassword,
-    });
-
-    await newUser.save();
-
-    res.status(201).json({ message: "User created successfully" });
+    res.status(200).json({ message: "Successfully signed out" });
   } catch (error) {
-    console.error("User signup error:", error);
+    console.error("Signout error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Get job details for the currently logged-in user
+router.get("/jobs", async (req, res) => {
+  const useremail = req.cookies.useremail; // Retrieve the user's email from the cookie
+
+  try {
+    // Fetch job details for the currently logged-in user from the database
+    const jobs = await Job.find({ email: useremail });
+
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.error("Error fetching job details:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });

@@ -8,6 +8,7 @@ const jobSchema = new mongoose.Schema({
   contact: String,
   jobCategories: String,
   jobDescription: String,
+  status: String,
 });
 
 module.exports = mongoose.model("Job", jobSchema);

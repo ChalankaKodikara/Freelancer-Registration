@@ -1,0 +1,53 @@
+/* Logout.css */
+
+.logout-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #008cba;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #008cba;
+}
+
+.dialog {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: #000;
+  margin-right: 10px;
+}
+
+.confirm-button {
+  background-color: #008cba;
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background-color: #d32f2f;
+}

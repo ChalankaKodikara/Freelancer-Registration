@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const adminSchema = new mongoose.Schema(
   {
-    username: String,
+    useremail: String, // Change 'username' to 'useremail'
     password: String,
   },
   { timestamps: true }

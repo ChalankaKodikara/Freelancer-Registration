@@ -19,7 +19,7 @@ function TableList() {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     axios
-      .get("http://localhost:5000/api/users", {
+      .get("https://backfreelance.tfdatamaster.com/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

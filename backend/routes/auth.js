@@ -98,36 +98,20 @@ function authenticateJWT(req, res, next) {
   }
 }
 
-// Signup route
-router.post("/signup", async (req, res) => {
+// Signout route
+router.post("/signout", (req, res) => {
   try {
-    const { firstName, lastName, email, country, contactNumber, password } =
-      req.body;
+    // Clear the user's session or token. In your case, it appears you're using JWT tokens.
+    // You can optionally implement a session-based approach depending on your use case.
+    // For JWT tokens, you can simply let the client remove the token on logout.
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(409).json({ error: "Email already taken" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = new User({
-      firstName,
-      lastName,
-      email,
-      country,
-      contactNumber,
-      password: hashedPassword,
-    });
-
-    await newUser.save();
-
-    res.status(201).json({ message: "User created successfully" });
+    res.status(200).json({ message: "Successfully signed out" });
   } catch (error) {
-    console.error("User signup error:", error);
+    console.error("Signout error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 // Get job details for the currently logged-in user
 router.get("/jobs", async (req, res) => {
   const useremail = req.cookies.useremail; // Retrieve the user's email from the cookie

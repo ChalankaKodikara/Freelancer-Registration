@@ -28,13 +28,6 @@ const dashboardRoutes = [
     component: () => <AuthRoute component={TableList} />,
     layout: "/admin",
   },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: () => <AuthRoute component={Notifications} />,
-    layout: "/admin",
-  },
 ];
 
 export default dashboardRoutes;
